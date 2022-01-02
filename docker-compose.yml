@@ -1,0 +1,51 @@
+version: '3'
+
+volumes:
+  united_data: {}
+
+
+services:
+  app: &app
+    build:
+      context: .
+      dockerfile: compose/backend/Dockerfile
+    command: python manage.py migrate --settings=settings.development
+    env_file:
+      - .envs
+    volumes:
+    - ./app:/app
+    depends_on:
+      - db
+      - redis
+
+  backend:
+    <<: *app
+    command: python manage.py runserver 0.0.0.0:8000
+
+  db:
+    image: postgres:latest
+    volumes:
+      - united_data:/var/lib/postgresql/data
+    env_file:
+      - .envs
+
+  redis:
+    build:
+      context: .
+      dockerfile: compose/redis/Dockerfile
+    command: sh -c "redis-server /config/redis.conf && redis-cli flushall"
+    env_file:
+      - .envs
+    sysctls:
+      net.core.somaxconn: '511'
+
+  nginx:
+    build:
+      context: .
+      dockerfile: compose/nginx/Dockerfile
+    volumes:
+    - ./app/static:/static
+    ports:
+      - 127.0.0.1:8000:8000
+    depends_on:
+      - app

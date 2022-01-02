@@ -1,0 +1,8 @@
+[flake8]
+max-line-length = 95
+exclude =
+  __pycache__,
+  app/settings/*,
+  app/*/migrations/*,
+  app/backend/__init__.py,
+ignore = F405, W503
