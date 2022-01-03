@@ -22,7 +22,6 @@ flake:
 
     $ flake8 --config flake8 app/
 
-TIME LOG
---------
+tests:
 
- - project setup: 0,5 h
+    $ docker-compose run backend pytest --ds settings.development
