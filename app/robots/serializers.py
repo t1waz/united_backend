@@ -1,10 +1,11 @@
 from rest_framework import serializers
 
 from common.serializers import (
-    ValidateOnlySerializer,
     RobotSerializerMixin,
+    ValidateOnlySerializer,
 )
 from robots.constants import RobotCommand
+from robots.models import Robot
 
 
 class ReadRobotPositionSerializer(ValidateOnlySerializer):
@@ -37,5 +38,17 @@ class RobotCommandSerializer(RobotSerializerMixin, ValidateOnlySerializer):
     def validate(self, attrs):
         if not self._robot.is_command_connected:
             raise serializers.ValidationError({'robot': 'robot is not connected'})
+
+        return attrs
+
+
+class RobotLoginSerializer(RobotSerializerMixin, ValidateOnlySerializer):
+    token = serializers.CharField(required=True)
+    serial = serializers.CharField(required=True)
+
+    def validate(self, attrs):
+        self._robot = Robot.objects.filter(**attrs).first()
+        if not self._robot:
+            raise serializers.ValidationError({'data': 'invalid data'})
 
         return attrs

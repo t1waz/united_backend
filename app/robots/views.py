@@ -9,11 +9,11 @@ from common.views import RobotAuthenticatedWebSocketMixin
 from robots import constants
 from robots.models import RobotPosition
 from robots.serializers import (
+    RobotLoginSerializer,
     RobotCommandSerializer,
     ReadRobotPositionSerializer,
 )
 from robots.services import RobotCryptoService
-from users.serializers import RobotLoginSerializer
 
 
 class RobotObtainTokenView(APIView):
