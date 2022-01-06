@@ -21,7 +21,9 @@ async def test_robot_cannot_connect_data_channel_without_token(f_robot_1):
 @pytest.mark.django_db(transaction=True)
 @pytest.mark.asyncio
 async def test_robot_cannot_connect_data_channel_with_invalid_token(f_robot_1):
-    communicator = WebsocketCommunicator(application, DATA_CHANNEL, headers={'x-token': 'invalid'})
+    communicator = WebsocketCommunicator(
+        application, DATA_CHANNEL, headers={'x-token': 'invalid'}
+    )
     connected, _ = await communicator.connect()
 
     assert not connected
