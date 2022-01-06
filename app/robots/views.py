@@ -47,7 +47,9 @@ class RobotCommandView(APIView):
 
     def _send_command(self, command_data):
         channel_layer = channels.layers.get_channel_layer()
-        async_to_sync(channel_layer.group_send)('robot_command', {'type': 'send.command', **command_data})
+        async_to_sync(channel_layer.group_send)(
+            'robot_command', {'type': 'send.command', **command_data}
+        )
 
     def post(self, request, *args, **kwargs):
         robot_command_serializer = RobotCommandSerializer(
