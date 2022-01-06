@@ -10,7 +10,7 @@ api_client = APIClient()
 
 @pytest.mark.django_db
 class TestRobotCounterView:
-    URL_NAME = 'robot_counter'
+    URL_NAME = 'robot_obtain_token'
 
     def test_get_request_on_robot_counter_view(self):
         response = api_client.get(path=reverse(self.URL_NAME))
@@ -79,7 +79,7 @@ class TestRobotCounterView:
         )
 
         assert response.status_code == 201
-        assert 'counter' in response.data
+        assert 'access_token' in response.data
 
     def tet_post_request_on_robot_counter_view_valid_data_created_cached_counter(
         self, f_robot_1
@@ -90,4 +90,4 @@ class TestRobotCounterView:
         )
 
         assert response.status_code == 201
-        assert cache.get_value(key=str(f_robot_1.uuid)) == response.data['counter']
+        assert cache.get_value(key=str(f_robot_1.uuid)) == response.data['access_token']

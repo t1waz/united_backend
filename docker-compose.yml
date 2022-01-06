@@ -21,6 +21,8 @@ services:
   backend:
     <<: *app
     command: python manage.py runserver 0.0.0.0:8000
+    ports:
+      - 127.0.0.1:8000:8000
 
   db:
     image: postgres:latest
@@ -39,13 +41,13 @@ services:
     sysctls:
       net.core.somaxconn: '511'
 
-  nginx:
-    build:
-      context: .
-      dockerfile: compose/nginx/Dockerfile
-    volumes:
-    - ./app/static:/static
-    ports:
-      - 127.0.0.1:8000:8000
-    depends_on:
-      - app
+#  nginx:
+#    build:
+#      context: .
+#      dockerfile: compose/nginx/Dockerfile
+#    volumes:
+#    - ./app/static:/static
+#    ports:
+#      - 127.0.0.1:8000:8000
+#    depends_on:
+#      - app

@@ -16,8 +16,12 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from users.urls import urlpatterns as users_urlpatterns
+from robots.urls import urlpatterns as robots_urlpatterns
 
-
-urlpatterns = [
-    path('admin/', admin.site.urls),
-] + users_urlpatterns
+urlpatterns = (
+    [
+        path('admin/', admin.site.urls),
+    ]
+    + users_urlpatterns
+    + robots_urlpatterns
+)

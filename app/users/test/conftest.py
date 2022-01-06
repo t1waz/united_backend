@@ -1,7 +1,12 @@
+from users.test import factories as users_factories
 import pytest
-from users.test import factories as users_factory
 
 
 @pytest.fixture
-def f_robot_1():
-    yield users_factory.RobotFactory()
+def f_active_user():
+    yield users_factories.UserFactory(is_active=True)
+
+
+@pytest.fixture
+def f_not_active_user():
+    yield users_factories.UserFactory(is_active=False)

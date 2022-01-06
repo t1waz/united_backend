@@ -2,6 +2,7 @@ import os
 
 from settings.base import *
 
+DEBUG = os.getenv('DEBUG', 'False').lower() in ('true', '1')
 
 ALLOWED_HOSTS = ['*']
 
@@ -29,3 +30,5 @@ STATIC_ROOT = os.path.join(BASE_DIR, "static")
 REDIS_HOST = os.getenv('REDIS_HOST')
 REDIS_PORT = os.getenv('REDIS_PORT')
 REDIS_DB = os.getenv('REDIS_DB')
+
+ROBOT_ACCESS_TOKEN_TTL = 300
