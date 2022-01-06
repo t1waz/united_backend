@@ -1,9 +1,6 @@
 import pytest
 from django.urls import reverse
 from rest_framework.test import APIClient
-from unittest.mock import patch
-from asgiref.sync import async_to_sync
-
 
 api_client = APIClient()
 

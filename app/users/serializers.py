@@ -1,19 +1,14 @@
 from rest_framework import serializers
 
-from common.serializers import (
-    RobotSerializerMixin,
-    ValidateOnlySerializer,
-)
 from robots.models import Robot
+from users.models import User
 
 
-class RobotLoginSerializer(RobotSerializerMixin, ValidateOnlySerializer):
-    token = serializers.CharField(required=True)
-    serial = serializers.CharField(required=True)
+class MeSerializer(serializers.ModelSerializer):
+    robots = serializers.SlugRelatedField(
+        many=True, queryset=Robot.objects.all(), slug_field='uuid'
+    )
 
-    def validate(self, attrs):
-        self._robot = Robot.objects.filter(**attrs).first()
-        if not self._robot:
-            raise serializers.ValidationError({'data': 'invalid data'})
-
-        return attrs
+    class Meta:
+        model = User
+        fields = ('uuid', 'first_name', 'last_name', 'is_active', 'robots')
