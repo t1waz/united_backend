@@ -8,6 +8,10 @@ import requests
 import websockets
 
 
+CACHE = {}
+
+DEFAULT_STATE = 'ready'
+
 SETTINGS = {
     'token': '',
     'serial': '',
@@ -54,8 +58,9 @@ async def handle_positions_data(auth_headers):
         await websocket.send(
             json.dumps(
                 {
-                    'id': str(uuid.uuid4()),
                     'type': 1,
+                    'id': str(uuid.uuid4()),
+                    'state': CACHE.get('state'),
                     'data': get_position_data(),
                 }
             )
@@ -81,8 +86,11 @@ async def handle_commands(auth_headers):
             readed_command = await websocket.recv()
             print('readed command', readed_command)
 
+            CACHE['state'] = readed_command
 
 if __name__ == '__main__':
+    CACHE['state'] = DEFAULT_STATE
+
     api_handler = APIHandler()
     api_handler.obtain_token()
 

@@ -11,7 +11,7 @@ class Robot(models.Model):
     token = models.CharField(max_length=255, null=True, blank=True)
 
     def __str__(self):
-        return self.serial
+        return f'{str(self.uuid)} {self.serial}'
 
 
 class RobotPosition(models.Model):
