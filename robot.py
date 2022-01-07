@@ -86,7 +86,7 @@ async def handle_commands(auth_headers):
             readed_command = await websocket.recv()
             print('readed command', readed_command)
 
-            CACHE['state'] = readed_command
+            CACHE['state'] = readed_command.get('command')
 
 if __name__ == '__main__':
     CACHE['state'] = DEFAULT_STATE
