@@ -136,4 +136,14 @@ class RobotDataChannel(RobotAuthenticatedWebSocketMixin, JsonWebsocketConsumer):
         else:
             self._return_error(frame_id=self._get_data_id(data=content))
 
+        async_to_sync(self.channel_layer.group_send)(
+            'robot_status',
+            {
+                'type': 'send.status',
+                'state': content.get('state'),
+                'robot_uuid': str(self.scope['robot'].uuid),
+                **content.get('data'),
+            },
+        )
+
         self.send_json({'status': 'ok', 'id': self._get_data_id(data=content)})

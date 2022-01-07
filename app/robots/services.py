@@ -1,7 +1,8 @@
 import secrets
 
-from common.cache import cache
 from django.conf import settings
+
+from common.cache import cache
 
 
 class RobotCryptoService:
