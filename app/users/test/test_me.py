@@ -2,7 +2,8 @@ import pytest  # noqa
 from django.urls import reverse
 from rest_framework.test import APIClient
 
-from robots.test.conftest import *
+from robots.test.conftest import *  # noqa
+
 
 api_client = APIClient()
 
